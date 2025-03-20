@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RPG_MonoGame_ShawnBernard", "RPG_MonoGame_ShawnBernard\RPG_MonoGame_ShawnBernard.csproj", "{1857AD73-611F-4DA1-A070-9BF05FEE8AC9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A9F0BBC0-2CD9-4270-B221-CF26AB7781B1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nez.MG38", "RPG_MonoGame_ShawnBernard\Nez-master\Nez.Portable\Nez.MG38.csproj", "{476EA2B6-74DE-4E9E-BF2A-92838EA819FB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1857AD73-611F-4DA1-A070-9BF05FEE8AC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1857AD73-611F-4DA1-A070-9BF05FEE8AC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1857AD73-611F-4DA1-A070-9BF05FEE8AC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1857AD73-611F-4DA1-A070-9BF05FEE8AC9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{476EA2B6-74DE-4E9E-BF2A-92838EA819FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{476EA2B6-74DE-4E9E-BF2A-92838EA819FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{476EA2B6-74DE-4E9E-BF2A-92838EA819FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{476EA2B6-74DE-4E9E-BF2A-92838EA819FB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8586E1AA-7462-4BE3-BB45-8B02527E9E58}
+	EndGlobalSection
+EndGlobal
