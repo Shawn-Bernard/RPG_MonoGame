@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Nez;
 using Nez.Sprites;
+using Nez.Tweens;
+using System;
 
 namespace RPG_MonoGame_ShawnBernard
 {
@@ -23,33 +25,24 @@ namespace RPG_MonoGame_ShawnBernard
             base.Initialize();
 
             // Making a new scene with default renderer for background
-            Scene scene = Scene.CreateWithDefaultRenderer(Color.Red);
+            Scene scene = Scene.CreateWithDefaultRenderer(Color.Gray);
             scene.ClearColor = Color.Red;
             TurnManager turnManager = new TurnManager();
             scene.AddEntity(turnManager);
 
-
-
+            Map map = new Map();
             // Loads player texture 
             Texture2D playerTexture = scene.Content.Load<Texture2D>("Player");
             Texture2D enemyTexture = scene.Content.Load<Texture2D>("Enemy");
 
+            Entity Map = new Map();
 
-            Actor enemy = new Actor(enemyTexture);
-            Actor player = new Actor(playerTexture);
-            //player = scene.CreateEntity("Player");
-
-
-
-
-
+            Actor player = new Actor(new Vector2 (10,10));
+            scene.Camera.SetPosition(player.Position);
+            player.Scale = new Vector2 (1, 1);
+            scene.AddEntity(player);
             // Setting core Scene to my new scene that I made
-            turnManager.turnSystem.AddActor(player);
-
-            foreach (Actor actor in turnManager.turnSystem.Actors)
-            {
-                scene.AddEntity(actor);
-            }
+            scene.AddEntity(Map);
             Scene = scene;
         }
 
@@ -60,8 +53,6 @@ namespace RPG_MonoGame_ShawnBernard
     {
         private int speed = 100;
         Actor entity;
-
-
         public Movement(Actor actor)
         {
             entity = actor;
@@ -69,7 +60,6 @@ namespace RPG_MonoGame_ShawnBernard
         // This is basically start method
         public override void OnAddedToEntity()
         {
-            Transform.Position = new Vector2(50, 50);
             Transform.Scale = new Vector2(5, 5);
 
 
@@ -85,101 +75,25 @@ namespace RPG_MonoGame_ShawnBernard
 
         public virtual void Controller()
         {
+            // If the actor is waiting for animation
+            if (entity.WaitAnimation)
+            {   //Returns if when the actor is waiting for animation
+                return;
+            }
+
             Vector2 move = Vector2.Zero;
-            if (Input.IsKeyPressed(Keys.W))
+
+            // Check for movement input and adjust the move vector accordingly
+            if (Input.IsKeyPressed(Keys.W)) move.Y -= 16; // Move up
+            if (Input.IsKeyPressed(Keys.S)) move.Y += 16; // Move down
+            if (Input.IsKeyPressed(Keys.A)) move.X -= 16; // Move left
+            if (Input.IsKeyPressed(Keys.D)) move.X += 16; // Move right
+
+            // Only execute movement if there is a change in position
+            if (move != Vector2.Zero)
             {
-                move.Y -= 100;
+                entity.Move(move); // Call Move() to update the entity’s position
             }
-            if (Input.IsKeyPressed(Keys.S))
-            {
-                move.Y += 100;
-            }
-            if (Input.IsKeyPressed(Keys.A))
-            {
-                move.X -= 100;
-            }
-            if (Input.IsKeyPressed(Keys.D))
-            {
-                move.X += 100;
-            }
-            if (Input.IsKeyDown(Keys.LeftShift))
-            {
-                speed = 200;
-            }
-            else
-            {
-                speed = 100;
-            }
-            // This gives a more player snap
-            entity.TweenLocalPositionTo(Transform.Position += move, 0.2f);
-
-            // This moves the player like normal
-            // Transform.Position += move * speed * Time.DeltaTime;
-        }
-    }
-    public class Actor : Entity
-    {
-        public SpriteRenderer spriteRenderer;
-
-        public Entity entity;
-        public Entity TurnManager;
-        public bool isTurn;
-        public bool WaitForTurn;
-        public bool WaitAnimation;
-        double animation;
-
-        public Actor(Texture2D texture2D)
-        {
-            AddComponent(new SpriteRenderer(texture2D));
-            spriteRenderer = GetComponent<SpriteRenderer>();
-
-            AddComponent(new Movement(this));
-
-
-        }
-
-        public override void OnAddedToScene()
-        {
-        }
-        public virtual void StartTurn()
-        {
-            //change color 
-            //entity.GetComponent<>
-            isTurn = true;
-            WaitForTurn = false;
-        }
-
-        public virtual void EndTurn()
-        {
-            isTurn = false;
-            WaitForTurn = true;
-        }
-
-        public virtual void UpdateTurn(GameTime gameTime)
-        {
-            if (WaitForTurn)
-            {
-                animation += gameTime.TotalGameTime.TotalSeconds;
-                if (animation < 15f)
-                {
-
-                }
-                else
-                {
-                    isTurn = true;
-                }
-            }
-        }
-
-        public virtual void Move(GameTime gameTime, Vector2 changeVector)
-        {
-            animation = gameTime.TotalGameTime.TotalSeconds;
-            Vector2 MoveVector = new Vector2(entity.Position.X + changeVector.X, entity.Position.Y + changeVector.Y);
-            entity.TweenPositionTo(MoveVector, (float)animation).Start();//SetCompletionHandler();
-
-
-            WaitAnimation = true;
-
         }
 
     }

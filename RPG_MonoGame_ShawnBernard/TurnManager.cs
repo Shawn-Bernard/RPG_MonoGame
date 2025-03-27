@@ -1,7 +1,7 @@
 ﻿using RPG_MonoGame_ShawnBernard;
 using Nez;
 
-public class TurnManager : Entity
+public class TurnManager : Entity, IUpdatable
 {
     public TurnBasedSystem turnSystem;
 
@@ -14,6 +14,12 @@ public class TurnManager : Entity
     {
 
     }
+
+    public override void Update()
+    {
+        turnSystem.UpdateTurn();
+    }
+
 
 
 

@@ -5,46 +5,42 @@ using System.Collections.Generic;
 
 namespace RPG_MonoGame_ShawnBernard
 {
-    public class TurnBasedSystem : Component, IUpdatable
+    public class TurnBasedSystem : Component
     {
         public List<Actor> Actors = new List<Actor>();
-
         public int order = 0;
-        public TurnBasedSystem()
-        {
-
-        }
 
         public void AddActor(Actor actor)
         {
             Actors.Add(actor);
         }
-        public void updateturn()
+
+        public void UpdateTurn()
         {
-            if (order < Actors.Count && order >= Actors.Count)
+            //Debug.Log($"Current order: {order}, Actor count: {Actors.Count}");
+
+            if (Actors.Count == 0) return; // Prevent errors if no actors exist
+
+            if (order < Actors.Count)
             {
-                var ActorTurn = Actors[order];
-                if (ActorTurn.isTurn)
+                Actor actorTurn = Actors[order];
+
+                //Debug.Log($"Current Actor's Turn: {actorTurn}");
+
+                if (!actorTurn.isTurn)
                 {
-                    ActorTurn.StartTurn();
+                    actorTurn.StartTurn();
                 }
                 else
                 {
-                    ActorTurn.EndTurn();
+                    actorTurn.UpdateTurn();
                 }
-                order++;
             }
             else
             {
                 order = 0;
-                Actor actor = Actors[order];
+                Actors[order].StartTurn();
             }
         }
-
-        public void Update()
-        {
-            
-        }
     }
-
 }
